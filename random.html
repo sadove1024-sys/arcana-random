@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오늘의 타로 — Arcana Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fbfaf6;
+    color: #15130f;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 40px 20px;
+  }
+
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    color: #8a8377;
+    margin-bottom: 48px;
+  }
+
+  .card-frame {
+    width: 160px;
+    height: 240px;
+    border: 1.5px solid #cfc7b3;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    background: #fbfaf6;
+  }
+
+  .card-frame::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1px solid #efe7d3;
+    border-radius: 4px;
+  }
+
+  .card-symbol {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: #cfc7b3;
+    transition: opacity 0.4s;
+  }
+
+  .card-symbol.hidden { opacity: 0; }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: #3a352d;
+    margin-bottom: 8px;
+    min-height: 28px;
+    text-align: center;
+  }
+
+  .card-kor {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: #8a8377;
+    margin-bottom: 40px;
+    min-height: 20px;
+    text-align: center;
+  }
+
+  button {
+    border: 1.5px solid #15130f;
+    background: #15130f;
+    color: #fbfaf6;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    padding: 14px 40px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  button:hover { background: #3a352d; }
+  button:disabled { opacity: 0.4; cursor: default; }
+
+  .rule {
+    width: 60px;
+    height: 1px;
+    background: #cfc7b3;
+    margin: 32px auto 0;
+  }
+
+  .count {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #8a8377;
+    margin-top: 16px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="wordmark">arcana diary</div>
+
+<div class="card-frame">
+  <span class="card-symbol" id="symbol">✦</span>
+</div>
+
+<div class="card-name" id="cardName"></div>
+<div class="card-kor" id="cardKor"></div>
+
+<button id="btn" onclick="draw()">오늘의 카드 뽑기</button>
+
+<div class="rule"></div>
+<div class="count" id="count"></div>
+
+<script>
+  let links = [];
+
+  async function init() {
+    try {
+      const res = await fetch('links.json');
+      links = await res.json();
+      document.getElementById('count').textContent =
+        links.length + '장의 카드가 준비되어 있습니다';
+    } catch {
+      document.getElementById('count').textContent = '카드를 불러오는 중...';
+    }
+  }
+
+  function draw() {
+    if (!links.length) return;
+    const btn    = document.getElementById('btn');
+    const symbol = document.getElementById('symbol');
+    const name   = document.getElementById('cardName');
+    const kor    = document.getElementById('cardKor');
+
+    btn.disabled = true;
+    symbol.classList.add('hidden');
+    name.textContent = '';
+    kor.textContent  = '';
+
+    const pick = links[Math.floor(Math.random() * links.length)];
+
+    setTimeout(() => {
+      name.textContent = pick.card;
+      kor.textContent  = pick.kor;
+      symbol.classList.remove('hidden');
+      setTimeout(() => { location.href = pick.url; }, 800);
+    }, 400);
+  }
+
+  init();
+</script>
+</body>
+</html>
