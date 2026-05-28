@@ -81,6 +81,13 @@
     text-align: center;
   }
 
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   button {
     border: 1.5px solid #15130f;
     background: #15130f;
@@ -95,6 +102,14 @@
 
   button:hover { background: #3a352d; }
   button:disabled { opacity: 0.4; cursor: default; }
+
+  button.outline {
+    background: transparent;
+    color: #15130f;
+    padding: 14px 28px;
+  }
+
+  button.outline:hover { background: #f4f1e8; }
 
   .rule {
     width: 60px;
@@ -123,13 +138,17 @@
 <div class="card-name" id="cardName"></div>
 <div class="card-kor" id="cardKor"></div>
 
-<button id="btn" onclick="draw()">오늘의 카드 뽑기</button>
+<div class="btn-group">
+  <button id="btn" onclick="draw()">오늘의 카드 뽑기</button>
+  <button id="btnShare" class="outline" onclick="share()" style="display:none">공유하기</button>
+</div>
 
 <div class="rule"></div>
 <div class="count" id="count"></div>
 
 <script>
   let links = [];
+  let picked = null;
 
   async function init() {
     try {
@@ -145,23 +164,40 @@
   function draw() {
     if (!links.length) return;
     const btn    = document.getElementById('btn');
+    const share  = document.getElementById('btnShare');
     const symbol = document.getElementById('symbol');
     const name   = document.getElementById('cardName');
     const kor    = document.getElementById('cardKor');
 
     btn.disabled = true;
+    share.style.display = 'none';
     symbol.classList.add('hidden');
     name.textContent = '';
     kor.textContent  = '';
 
-    const pick = links[Math.floor(Math.random() * links.length)];
+    picked = links[Math.floor(Math.random() * links.length)];
 
     setTimeout(() => {
-      name.textContent = pick.card;
-      kor.textContent  = pick.kor;
+      name.textContent = picked.card;
+      kor.textContent  = picked.kor;
       symbol.classList.remove('hidden');
-      setTimeout(() => { location.href = pick.url; }, 800);
+      btn.textContent  = '인스타에서 보기 →';
+      btn.disabled     = false;
+      btn.onclick      = () => { location.href = picked.url; };
+      share.style.display = 'inline-block';
     }, 400);
+  }
+
+  async function share() {
+    if (!picked) return;
+    const text = `오늘의 타로: ${picked.card} (${picked.kor})\narcana.diary에서 오늘의 카드를 뽑아보세요 ✦`;
+    const url  = 'https://sadove1024-sys.github.io/arcana-random/';
+    if (navigator.share) {
+      await navigator.share({ text, url });
+    } else {
+      await navigator.clipboard.writeText(text + '\n' + url);
+      alert('링크가 복사되었습니다');
+    }
   }
 
   init();
