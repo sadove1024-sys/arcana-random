@@ -133,7 +133,7 @@
 
   async function init() {
     try {
-      const res = await fetch('links.json');
+      const res = await fetch('links.json?v=' + Date.now());
       links = await res.json();
       document.getElementById('count').textContent =
         links.length + '장의 카드가 준비되어 있습니다';
