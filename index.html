@@ -42,6 +42,7 @@
     position: relative;
     overflow: hidden;
     background: #fbfaf6;
+    transition: width 0.4s ease, height 0.4s ease, border-radius 0.4s ease;
   }
 
   .card-frame::before {
@@ -50,16 +51,37 @@
     inset: 10px;
     border: 1px solid #efe7d3;
     border-radius: 4px;
+    transition: opacity 0.3s;
   }
+
+  .card-frame.revealed {
+    width: 280px;
+    height: 280px;
+    border-radius: 12px;
+  }
+
+  .card-frame.revealed::before { opacity: 0; }
 
   .card-symbol {
     font-family: 'Cormorant Garamond', serif;
     font-size: 48px;
     color: #cfc7b3;
-    transition: opacity 0.4s;
+    transition: opacity 0.3s;
   }
 
   .card-symbol.hidden { opacity: 0; }
+
+  .card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.2s;
+  }
+
+  .card-img.visible { opacity: 1; }
 
   .card-name {
     font-family: 'Cormorant Garamond', serif;
@@ -76,9 +98,28 @@
     font-size: 13px;
     letter-spacing: 0.18em;
     color: #8a8377;
-    margin-bottom: 40px;
+    margin-bottom: 16px;
     min-height: 20px;
     text-align: center;
+  }
+
+  .card-tags {
+    font-size: 11px;
+    color: #aaa49a;
+    letter-spacing: 0.04em;
+    text-align: center;
+    max-width: 300px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+    min-height: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease, margin-bottom 0.4s ease;
+  }
+
+  .card-tags.visible {
+    max-height: 80px;
+    margin-bottom: 32px;
   }
 
   .btn-group {
@@ -131,16 +172,18 @@
 
 <div class="wordmark">arcana diary</div>
 
-<div class="card-frame">
+<div class="card-frame" id="frame">
   <span class="card-symbol" id="symbol">✦</span>
+  <img class="card-img" id="cardImg" src="" alt="">
 </div>
 
 <div class="card-name" id="cardName"></div>
 <div class="card-kor" id="cardKor"></div>
+<div class="card-tags" id="cardTags"></div>
 
 <div class="btn-group">
   <button id="btn" onclick="draw()">오늘의 카드 뽑기</button>
-  <button id="btnShare" class="outline" onclick="share()" style="display:none">공유하기</button>
+  <button id="btnShare" class="outline" onclick="shareCard()" style="display:none">공유하기</button>
 </div>
 
 <div class="rule"></div>
@@ -164,31 +207,50 @@
   function draw() {
     if (!links.length) return;
     const btn    = document.getElementById('btn');
-    const share  = document.getElementById('btnShare');
+    const btnS   = document.getElementById('btnShare');
     const symbol = document.getElementById('symbol');
+    const img    = document.getElementById('cardImg');
+    const frame  = document.getElementById('frame');
     const name   = document.getElementById('cardName');
     const kor    = document.getElementById('cardKor');
+    const tags   = document.getElementById('cardTags');
 
     btn.disabled = true;
-    share.style.display = 'none';
-    symbol.classList.add('hidden');
+    btnS.style.display = 'none';
+    symbol.classList.remove('hidden');
+    img.classList.remove('visible');
+    frame.classList.remove('revealed');
     name.textContent = '';
     kor.textContent  = '';
+    tags.textContent = '';
+    tags.classList.remove('visible');
 
     picked = links[Math.floor(Math.random() * links.length)];
 
     setTimeout(() => {
       name.textContent = picked.card;
       kor.textContent  = picked.kor;
-      symbol.classList.remove('hidden');
-      btn.textContent  = '인스타에서 보기 →';
-      btn.disabled     = false;
-      btn.onclick      = () => { location.href = picked.url; };
-      share.style.display = 'inline-block';
+
+      if (picked.tags) {
+        tags.textContent = picked.tags;
+        tags.classList.add('visible');
+      }
+
+      if (picked.img) {
+        symbol.classList.add('hidden');
+        frame.classList.add('revealed');
+        img.src = picked.img;
+        img.classList.add('visible');
+      }
+
+      btn.textContent = '인스타에서 보기 →';
+      btn.disabled    = false;
+      btn.onclick     = () => { location.href = picked.url; };
+      btnS.style.display = 'inline-block';
     }, 400);
   }
 
-  async function share() {
+  async function shareCard() {
     if (!picked) return;
     const text = `오늘의 타로: ${picked.card} (${picked.kor})\narcana.diary에서 오늘의 카드를 뽑아보세요 ✦`;
     const url  = 'https://sadove1024-sys.github.io/arcana-random/';

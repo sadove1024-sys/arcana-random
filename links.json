@@ -3,84 +3,112 @@
     "file": "00_THE_FOOL",
     "card": "THE FOOL",
     "kor": "바보·광대",
-    "url": "https://www.instagram.com/p/DYytyv3FM1j/"
+    "url": "https://www.instagram.com/p/DYytyv3FM1j/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/00_THE_FOOL/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나"
   },
   {
     "file": "01_THE_MAGICIAN",
     "card": "THE MAGICIAN",
     "kor": "마법사",
-    "url": "https://www.instagram.com/p/DYzfIunGPdu/"
+    "url": "https://www.instagram.com/p/DYzfIunGPdu/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/01_THE_MAGICIAN/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나 #마법사카드 #TheMagician #창조와시작 #능력자"
   },
   {
     "file": "02_THE_HIGH_PRIESTESS",
     "card": "THE HIGH PRIESTESS",
     "kor": "여사제",
-    "url": "https://www.instagram.com/p/DY03k-8GAiW/"
+    "url": "https://www.instagram.com/p/DY03k-8GAiW/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/02_THE_HIGH_PRIESTESS/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나 #여사제카드 #HighPriestess #직관 #신비로운"
   },
   {
     "file": "03_THE_EMPRESS",
     "card": "THE EMPRESS",
     "kor": "여황제",
-    "url": "https://www.instagram.com/p/DY03xhyGKZe/"
+    "url": "https://www.instagram.com/p/DY03xhyGKZe/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/03_THE_EMPRESS/01_cover.png",
+    "tags": "#여황제  #TheEmpress  #메이저아르카나"
   },
   {
     "file": "04_THE_EMPEROR",
     "card": "THE EMPEROR",
     "kor": "황제",
-    "url": "https://www.instagram.com/p/DY1DZbmGH4x/"
+    "url": "https://www.instagram.com/p/DY1DZbmGH4x/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/04_THE_EMPEROR/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나 #황제카드 #TheEmperor #리더십 #권위"
   },
   {
     "file": "05_THE_HIEROPHANT",
     "card": "THE HIEROPHANT",
     "kor": "교황",
-    "url": "https://www.instagram.com/p/DY1HvxoGLvD/"
+    "url": "https://www.instagram.com/p/DY1HvxoGLvD/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/05_THE_HIEROPHANT/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나"
   },
   {
     "file": "06_THE_LOVERS",
     "card": "THE LOVERS",
     "kor": "연인",
-    "url": "https://www.instagram.com/p/DY2C1qUmG5j/"
+    "url": "https://www.instagram.com/p/DY2C1qUmG5j/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/06_THE_LOVERS/01_cover.png",
+    "tags": "#arcana_diary #타로읽기 #메이저아르카나"
   },
   {
     "file": "07_THE_CHARIOT",
     "card": "THE CHARIOT",
     "kor": "전차",
-    "url": "https://www.instagram.com/p/DY2EtOKGEO3/"
+    "url": "https://www.instagram.com/p/DY2EtOKGEO3/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/07_THE_CHARIOT/01_cover.png",
+    "tags": "#전차카드 #TheChariot #승리의에너지 #추진력 #의지의전사 #두스핑크스"
   },
   {
     "file": "08_THE_STRENGTH",
     "card": "STRENGTH",
     "kor": "힘",
-    "url": "https://www.instagram.com/p/DY3SjiaGMRM/"
+    "url": "https://www.instagram.com/p/DY3SjiaGMRM/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/08_THE_STRENGTH/01_cover.png",
+    "tags": "#사자와여인 #외유내강 #STRENGTH #내면의힘 #온기가무기다"
   },
   {
     "file": "09_THE_HERMIT",
     "card": "THE HERMIT",
     "kor": "은자",
-    "url": "https://www.instagram.com/p/DY3U_KyGNWT/"
+    "url": "https://www.instagram.com/p/DY3U_KyGNWT/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/09_THE_HERMIT/01_cover.png",
+    "tags": "#고독과지혜 #내면의등불 #침묵속진실 #TheHermit #은자타로 #성찰의시간"
   },
   {
     "file": "10_THE_WHEEL_OF_FORTUNE",
     "card": "WHEEL OF FORTUNE",
     "kor": "운명의 수레바퀴",
-    "url": "https://www.instagram.com/p/DY3i5qKGF_1/"
+    "url": "https://www.instagram.com/p/DY3i5qKGF_1/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/10_THE_WHEEL_OF_FORTUNE/01_cover.png",
+    "tags": "#운명의수레바퀴 #WheelOfFortune #터닝포인트 #운명적순환 #흐름을타라"
   },
   {
     "file": "11_JUSTICE",
     "card": "JUSTICE",
     "kor": "정의",
-    "url": "https://www.instagram.com/p/DY3rrBQGFOx/"
+    "url": "https://www.instagram.com/p/DY3rrBQGFOx/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/11_JUSTICE/01_cover.png",
+    "tags": "#저울의언어 #뿌린만큼거둔다 #JUSTICE #정의여신 #인과응보의법칙"
   },
   {
     "file": "12_THE_HANGED_MAN",
     "card": "THE HANGED MAN",
     "kor": "매달린 사람",
-    "url": "https://www.instagram.com/p/DY4U8qYGKYA/"
+    "url": "https://www.instagram.com/p/DY4U8qYGKYA/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/12_THE_HANGED_MAN/01_cover.png",
+    "tags": "#거꾸로보는세상 #멈춤의지혜 #TheHangedMan #매달린사람 #기다림의용기"
   },
   {
     "file": "13_THE_DEATH",
     "card": "DEATH",
     "kor": "죽음",
-    "url": "https://www.instagram.com/p/DY5ngo6GC2q/"
+    "url": "https://www.instagram.com/p/DY5ngo6GC2q/",
+    "img": "https://res.cloudinary.com/dgyhgs0ja/image/upload/arcana-diary/13_THE_DEATH/01_cover.png",
+    "tags": "#끝과시작 #변화의문턱 #TheDeath #죽음카드 #전환점"
   }
 ]
