@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>운명 카드 계산기 — Arcana Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fbfaf6;
+    color: #15130f;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 40px 20px 80px;
+  }
+
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    color: #8a8377;
+    margin-bottom: 40px;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .page-desc {
+    font-size: 13px;
+    color: #8a8377;
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  /* ── Input ── */
+
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    flex: 1;
+  }
+  .field.year { flex: 1.5; }
+
+  .field-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: #8a8377;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    border: 1.5px solid #cfc7b3;
+    background: #fbfaf6;
+    color: #15130f;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    padding: 10px 8px;
+    text-align: center;
+    outline: none;
+    border-radius: 0;
+    -moz-appearance: textfield;
+    appearance: none;
+  }
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input[type="number"]:focus, select:focus { border-color: #8a8377; }
+  select { cursor: pointer; }
+
+  button {
+    border: 1.5px solid #15130f;
+    background: #15130f;
+    color: #fbfaf6;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    padding: 14px 48px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  button:hover { background: #3a352d; }
+
+  button.outline {
+    background: transparent;
+    color: #15130f;
+    padding: 12px 32px;
+  }
+  button.outline:hover { background: #f4f1e8; }
+
+  /* ── Result ── */
+
+  .rule {
+    width: 60px;
+    height: 1px;
+    background: #cfc7b3;
+    margin: 40px 0;
+  }
+
+  .calc-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: #8a8377;
+    letter-spacing: 0.04em;
+    text-align: center;
+    line-height: 2;
+    margin-bottom: 40px;
+    max-width: 320px;
+  }
+
+  .calc-arrow {
+    color: #cfc7b3;
+    margin: 0 6px;
+  }
+
+  .calc-result {
+    color: #3a352d;
+    font-weight: 400;
+  }
+
+  /* ── Cards ── */
+
+  .cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+  }
+
+  .card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: #8a8377;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .card-frame {
+    width: 210px;
+    height: 350px;
+    border: 1.5px solid #cfc7b3;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: #aaa49a;
+    letter-spacing: 0.22em;
+    margin-bottom: 5px;
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: #3a352d;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .card-kor {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: #8a8377;
+    margin-bottom: 12px;
+  }
+
+  .card-kw {
+    font-size: 13px;
+    color: #aaa49a;
+    letter-spacing: 0.06em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .insta-btn {
+    border: 1.5px solid #15130f;
+    background: transparent;
+    color: #15130f;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .insta-btn:hover { background: #f4f1e8; }
+
+  .back-link {
+    font-size: 12px;
+    color: #8a8377;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .back-link:hover { color: #3a352d; }
+
+  .error-msg {
+    font-size: 13px;
+    color: #c0392b;
+    letter-spacing: 0.08em;
+    margin-top: 8px;
+    min-height: 20px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="wordmark">arcana diary</div>
+<h1 class="page-title">운명 카드</h1>
+<p class="page-desc">생년월일로 나만의 타로 카드를 찾아보세요</p>
+
+<div class="input-section">
+  <div class="input-row">
+    <div class="field year">
+      <input type="number" id="iYear" placeholder="1990" min="1920" max="2025">
+      <span class="field-label">연도</span>
+    </div>
+    <div class="field">
+      <select id="iMonth">
+        <option value="">월</option>
+      </select>
+      <span class="field-label">월</span>
+    </div>
+    <div class="field">
+      <select id="iDay">
+        <option value="">일</option>
+      </select>
+      <span class="field-label">일</span>
+    </div>
+  </div>
+  <div class="error-msg" id="errMsg"></div>
+  <button onclick="calculate()">계산하기</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="rule"></div>
+  <div class="calc-display" id="calcDisplay"></div>
+  <div class="cards-container" id="cardsContainer"></div>
+  <div class="rule"></div>
+  <button class="outline" onclick="shareResult()">공유하기</button>
+</div>
+
+<div class="rule" style="margin-top: 48px"></div>
+<a class="back-link" href="./">← 오늘의 카드 뽑기</a>
+
+<script>
+// ── Card data ───────────────────────────────────────────────────────────────
+const CARDS = [
+  { num: 0,  file: '00_THE_FOOL',            card: 'THE FOOL',           kor: '바보·광대',       kw: '새 출발 · 순수 · 모험' },
+  { num: 1,  file: '01_THE_MAGICIAN',         card: 'THE MAGICIAN',       kor: '마법사',          kw: '의지 · 창조 · 집중' },
+  { num: 2,  file: '02_THE_HIGH_PRIESTESS',   card: 'THE HIGH PRIESTESS', kor: '여사제',          kw: '직관 · 침묵 · 신비' },
+  { num: 3,  file: '03_THE_EMPRESS',          card: 'THE EMPRESS',        kor: '여황제',          kw: '풍요 · 모성 · 창조' },
+  { num: 4,  file: '04_THE_EMPEROR',          card: 'THE EMPEROR',        kor: '황제',            kw: '안정 · 권위 · 구조' },
+  { num: 5,  file: '05_THE_HIEROPHANT',       card: 'THE HIEROPHANT',     kor: '교황',            kw: '전통 · 지혜 · 안내' },
+  { num: 6,  file: '06_THE_LOVERS',           card: 'THE LOVERS',         kor: '연인',            kw: '선택 · 연결 · 가치' },
+  { num: 7,  file: '07_THE_CHARIOT',          card: 'THE CHARIOT',        kor: '전차',            kw: '추진력 · 승리 · 의지' },
+  { num: 8,  file: '08_THE_STRENGTH',         card: 'STRENGTH',           kor: '힘',              kw: '내면의 힘 · 온화 · 용기' },
+  { num: 9,  file: '09_THE_HERMIT',           card: 'THE HERMIT',         kor: '은자',            kw: '고독 · 지혜 · 성찰' },
+  { num: 10, file: '10_THE_WHEEL_OF_FORTUNE', card: 'WHEEL OF FORTUNE',   kor: '운명의 수레바퀴', kw: '변화 · 순환 · 운명' },
+  { num: 11, file: '11_JUSTICE',              card: 'JUSTICE',            kor: '정의',            kw: '균형 · 진실 · 인과' },
+  { num: 12, file: '12_THE_HANGED_MAN',       card: 'THE HANGED MAN',     kor: '매달린 사람',     kw: '기다림 · 내려놓음 · 관점' },
+  { num: 13, file: '13_THE_DEATH',            card: 'DEATH',              kor: '죽음',            kw: '변환 · 종결 · 새 시작' },
+  { num: 14, file: '14_THE_TEMPERANCE',       card: 'TEMPERANCE',         kor: '절제',            kw: '균형 · 조율 · 인내' },
+  { num: 15, file: '15_THE_DEVIL',            card: 'THE DEVIL',          kor: '악마',            kw: '속박 · 욕망 · 해방' },
+  { num: 16, file: '16_THE_TOWER',            card: 'THE TOWER',          kor: '탑',              kw: '각성 · 붕괴 · 해방' },
+  { num: 17, file: '17_THE_STAR',             card: 'THE STAR',           kor: '별',              kw: '희망 · 치유 · 영감' },
+  { num: 18, file: '18_THE_MOON',             card: 'THE MOON',           kor: '달',              kw: '직관 · 환상 · 무의식' },
+  { num: 19, file: '19_THE_SUN',              card: 'THE SUN',            kor: '태양',            kw: '기쁨 · 활력 · 성공' },
+  { num: 20, file: '20_THE_JUDGEMENT',        card: 'JUDGEMENT',          kor: '심판',            kw: '각성 · 부활 · 소명' },
+  { num: 21, file: '21_THE_WORLD',            card: 'THE WORLD',          kor: '세계',            kw: '완성 · 통합 · 성취' },
+];
+
+const IMG_BASE = 'https://sadove1024-sys.github.io/arcana-random/cards/';
+let linksMap = {}; // file → instagram url
+let resultCards = [];
+
+// ── Populate selects ─────────────────────────────────────────────────────────
+(function initSelects() {
+  const mSel = document.getElementById('iMonth');
+  const dSel = document.getElementById('iDay');
+  for (let m = 1; m <= 12; m++) {
+    const o = document.createElement('option');
+    o.value = m; o.textContent = m;
+    mSel.appendChild(o);
+  }
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    dSel.appendChild(o);
+  }
+})();
+
+// ── Load links.json for instagram URLs ───────────────────────────────────────
+(async function loadLinks() {
+  try {
+    const res = await fetch('links.json?v=' + Date.now());
+    const arr = await res.json();
+    arr.forEach(e => { linksMap[e.file] = e.url; });
+  } catch {}
+})();
+
+// ── Numerology ───────────────────────────────────────────────────────────────
+function digitSum(n) {
+  return String(Math.abs(n)).split('').reduce((s, d) => s + +d, 0);
+}
+
+function calcResult(year, month, day) {
+  const ySum = digitSum(year);
+  const mSum = digitSum(String(month).padStart(2, '0'));
+  const dSum = digitSum(String(day).padStart(2, '0'));
+  const total = ySum + mSum + dSum;
+
+  let personality, soul, step2 = null;
+
+  if (total === 22) {
+    personality = 0; soul = 0;
+  } else if (total <= 21) {
+    personality = total;
+    soul = (total >= 10) ? digitSum(total) : total;
+    if (total >= 10) step2 = soul;
+  } else {
+    step2 = digitSum(total);
+    if (step2 >= 10) {
+      personality = step2;
+      soul = digitSum(step2);
+    } else {
+      personality = step2; soul = step2;
+    }
+  }
+
+  return { ySum, mSum, dSum, total, step2, personality, soul };
+}
+
+function buildCalcDisplay(year, month, day, r) {
+  const yearDigits = String(year).split('').join('+');
+  const monDigits  = String(month).padStart(2,'0').split('').join('+');
+  const dayDigits  = String(day).padStart(2,'0').split('').join('+');
+  const allDigits  = `${yearDigits}+${monDigits}+${dayDigits}`;
+
+  let html = `<span>${allDigits}</span> = <span class="calc-result">${r.total}</span>`;
+
+  if (r.step2 !== null) {
+    const s2digits = String(r.total).split('').join('+');
+    html += ` <span class="calc-arrow">→</span> ${s2digits} = <span class="calc-result">${r.step2}</span>`;
+  }
+
+  if (r.personality !== r.soul) {
+    const p2digits = String(r.personality).split('').join('+');
+    html += ` <span class="calc-arrow">→</span> ${p2digits} = <span class="calc-result">${r.soul}</span>`;
+  }
+
+  return html;
+}
+
+function buildYearCalcDisplay(year, month, day, r) {
+  const yearDigits = String(year).split('').join('+');
+  const monDigits  = String(month).padStart(2,'0').split('').join('+');
+  const dayDigits  = String(day).padStart(2,'0').split('').join('+');
+  const allDigits  = `${yearDigits}+${monDigits}+${dayDigits}`;
+
+  let html = `${allDigits} = <span class="calc-result">${r.total}</span>`;
+
+  if (r.step2 !== null) {
+    const s2digits = String(r.total).split('').join('+');
+    html += ` <span class="calc-arrow">→</span> ${s2digits} = <span class="calc-result">${r.step2}</span>`;
+  }
+
+  if (r.personality !== r.soul) {
+    const p2digits = String(r.personality).split('').join('+');
+    html += ` <span class="calc-arrow">→</span> ${p2digits} = <span class="calc-result">${r.soul}</span>`;
+  }
+
+  return html;
+}
+
+// ── Render card section ───────────────────────────────────────────────────────
+function renderCard(label, cardNum, delay) {
+  const c = CARDS[cardNum];
+  const url = linksMap[c.file] || null;
+  const numStr = cardNum === 0 ? '0' : String(cardNum).padStart(2, '0');
+
+  const sec = document.createElement('div');
+  sec.className = 'card-section';
+  sec.style.animationDelay = delay + 'ms';
+
+  const instaBtnHtml = url
+    ? `<button class="insta-btn" onclick="window.open('${url}','_blank')">인스타에서 보기 →</button>`
+    : '';
+
+  sec.innerHTML = `
+    <div class="section-label">${label}</div>
+    <div class="card-frame">
+      <img class="card-img" src="${IMG_BASE}${c.file}.jpg" alt="${c.card}">
+    </div>
+    <div class="card-num">#${numStr}</div>
+    <div class="card-name">${c.card}</div>
+    <div class="card-kor">${c.kor}</div>
+    <div class="card-kw">${c.kw}</div>
+    ${instaBtnHtml}
+  `;
+
+  return sec;
+}
+
+// ── Main calculate ────────────────────────────────────────────────────────────
+function calculate() {
+  const year  = parseInt(document.getElementById('iYear').value, 10);
+  const month = parseInt(document.getElementById('iMonth').value, 10);
+  const day   = parseInt(document.getElementById('iDay').value, 10);
+  const err   = document.getElementById('errMsg');
+
+  if (!year || year < 1920 || year > 2025 || !month || !day) {
+    err.textContent = '생년월일을 모두 입력해 주세요';
+    return;
+  }
+  err.textContent = '';
+
+  const curYear = new Date().getFullYear();
+
+  const r    = calcResult(year, month, day);
+  const rYear = calcResult(curYear, month, day);
+
+  // Build calc display
+  const calcEl = document.getElementById('calcDisplay');
+  let calcHtml = buildCalcDisplay(year, month, day, r);
+
+  // Year card line
+  calcHtml += `<br><span style="font-size:15px;color:#aaa49a;letter-spacing:0.12em">${curYear}년 카드 &nbsp;</span>`;
+  calcHtml += buildYearCalcDisplay(curYear, month, day, rYear);
+
+  calcEl.innerHTML = calcHtml;
+
+  // Build cards
+  const container = document.getElementById('cardsContainer');
+  container.innerHTML = '';
+
+  resultCards = [];
+
+  if (r.personality === r.soul) {
+    // Same card — show once with combined label
+    const sec = renderCard('성격 카드 · 영혼 카드', r.soul, 0);
+    container.appendChild(sec);
+    resultCards.push({ label: '성격 카드 · 영혼 카드', card: CARDS[r.soul] });
+  } else {
+    container.appendChild(renderCard('성격 카드', r.personality, 0));
+    container.appendChild(renderCard('영혼 카드', r.soul, 120));
+    resultCards.push({ label: '성격 카드', card: CARDS[r.personality] });
+    resultCards.push({ label: '영혼 카드', card: CARDS[r.soul] });
+  }
+
+  container.appendChild(renderCard('올해의 카드', rYear.soul, r.personality === r.soul ? 120 : 240));
+  resultCards.push({ label: '올해의 카드', card: CARDS[rYear.soul] });
+
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Share ─────────────────────────────────────────────────────────────────────
+async function shareResult() {
+  if (!resultCards.length) return;
+  const lines = resultCards.map(r => `${r.label}: ${r.card.card} (${r.card.kor})`);
+  const text  = lines.join('\n') + '\narcana.diary에서 나만의 운명 카드를 찾아보세요 ✦';
+  const url   = 'https://sadove1024-sys.github.io/arcana-random/destiny.html';
+  const full  = text + '\n' + url;
+
+  if (navigator.share) {
+    try { await navigator.share({ text, url }); return; } catch {}
+  }
+  try {
+    await navigator.clipboard.writeText(full);
+    alert('클립보드에 복사되었습니다');
+  } catch {
+    const el = document.createElement('textarea');
+    el.value = full;
+    el.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('클립보드에 복사되었습니다');
+  }
+}
+</script>
+</body>
+</html>
