@@ -156,6 +156,30 @@
     width: 100%;
   }
 
+  /* 성격 + 영혼 카드 나란히 */
+  .cards-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .cards-row .card-section {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    flex: 0 0 auto;
+  }
+
+  .cards-row .card-frame {
+    width: 150px;
+    height: 250px;
+  }
+
   .card-section {
     display: flex;
     flex-direction: column;
@@ -493,18 +517,19 @@ function calculate() {
   resultCards = [];
 
   if (r.personality === r.soul) {
-    // Same card — show once with combined label
-    const sec = renderCard('성격 카드 · 영혼 카드', r.soul, 0);
-    container.appendChild(sec);
+    container.appendChild(renderCard('성격 카드 · 영혼 카드', r.soul, 0));
     resultCards.push({ label: '성격 카드 · 영혼 카드', card: CARDS[r.soul] });
   } else {
-    container.appendChild(renderCard('성격 카드', r.personality, 0));
-    container.appendChild(renderCard('영혼 카드', r.soul, 120));
+    const row = document.createElement('div');
+    row.className = 'cards-row';
+    row.appendChild(renderCard('성격 카드', r.personality, 0));
+    row.appendChild(renderCard('영혼 카드', r.soul, 0));
+    container.appendChild(row);
     resultCards.push({ label: '성격 카드', card: CARDS[r.personality] });
     resultCards.push({ label: '영혼 카드', card: CARDS[r.soul] });
   }
 
-  container.appendChild(renderCard('올해의 카드', rYear.soul, r.personality === r.soul ? 120 : 240));
+  container.appendChild(renderCard('올해의 카드', rYear.soul, r.personality === r.soul ? 120 : 120));
   resultCards.push({ label: '올해의 카드', card: CARDS[rYear.soul] });
 
   document.getElementById('result').style.display = 'block';
