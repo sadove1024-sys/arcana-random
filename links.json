@@ -195,7 +195,7 @@
     "file": "03_Three_SWORDS",
     "card": "THREE OF SWORDS",
     "kor": "소드 3",
-    "url": "https://www.instagram.com/p/DZB-vxAmLmQ/",
+    "url": "https://www.instagram.com/p/DZHBq8qGAUN/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/03_Three_SWORDS.jpg",
     "tags": "#세자루검 #붉은하트 #폭풍구름 #소드수트 #이별의감정 #심적고통"
   },
@@ -203,7 +203,7 @@
     "file": "04_Four_SWORDS",
     "card": "FOUR OF SWORDS",
     "kor": "소드 4",
-    "url": "https://www.instagram.com/p/DZCn1nlGCKc/",
+    "url": "https://www.instagram.com/p/DZHB1mMmD-s/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/04_Four_SWORDS.jpg",
     "tags": "#쉬어가는시간 #번아웃 #내면성찰 #명상 #회복 #소드카드"
   },
@@ -211,7 +211,7 @@
     "file": "05_Five_SWORDS",
     "card": "FIVE OF SWORDS",
     "kor": "소드 5",
-    "url": "https://www.instagram.com/p/DZD6Z_WGPXz/",
+    "url": "https://www.instagram.com/p/DZHCBKzGFAA/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/05_Five_SWORDS.jpg",
     "tags": "#소드파이브 #비열한승리 #주도권다툼 #상처 #갈등 #배신의계절"
   },
@@ -219,7 +219,7 @@
     "file": "06_Six_SWORDS",
     "card": "SIX OF SWORDS",
     "kor": "소드 6",
-    "url": "https://www.instagram.com/p/DZEjaRbmIPQ/",
+    "url": "https://www.instagram.com/p/DZHCMzfmGNC/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/06_Six_SWORDS.jpg",
     "tags": "#소드6 #SixOfSwords #나룻배 #조용한전진 #고요한강"
   },
@@ -227,7 +227,7 @@
     "file": "07_Seven_SWORDS",
     "card": "SEVEN OF SWORDS",
     "kor": "소드 7",
-    "url": "https://www.instagram.com/p/DZFMpx1GAgw/",
+    "url": "https://www.instagram.com/p/DZHCYBHGI3A/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/07_Seven_SWORDS.jpg",
     "tags": "#속임수 #SevenOfSwords #위태로운균형 #칼날의경고 #기만주의"
   },
@@ -235,8 +235,16 @@
     "file": "08_Eight_SWORDS",
     "card": "EIGHT OF SWORDS",
     "kor": "소드 8",
-    "url": "https://www.instagram.com/p/DZGfgrJGCTv/",
+    "url": "https://www.instagram.com/p/DZHCirVGFSW/",
     "img": "https://sadove1024-sys.github.io/arcana-random/cards/08_Eight_SWORDS.jpg",
     "tags": "#마음의감옥 #자기구속 #두려움 #소드에너지 #행동유보 #내면의벽"
+  },
+  {
+    "file": "09_Nine_SWORDS",
+    "card": "NINE OF SWORDS",
+    "kor": "소드 9",
+    "url": "https://www.instagram.com/p/DZHINILmLng/",
+    "img": "https://sadove1024-sys.github.io/arcana-random/cards/09_Nine_SWORDS.jpg",
+    "tags": "#잠못드는밤 #소드9 #NineOfSwords #불안타로 #마음의검 #생각과다 #새벽불면"
   }
 ]
