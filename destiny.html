@@ -350,7 +350,7 @@ const CARDS = [
   { num: 21, file: '21_THE_WORLD',            card: 'THE WORLD',          kor: '세계',            kw: '완성 · 통합 · 성취' },
 ];
 
-const IMG_BASE = 'https://sadove1024-sys.github.io/arcana-random/cards/';
+const IMG_BASE = 'https://arcana.dovedraw.com/cards/';
 let linksMap = {}; // file → instagram url
 let resultCards = [];
 
@@ -541,7 +541,7 @@ async function shareResult() {
   if (!resultCards.length) return;
   const lines = resultCards.map(r => `${r.label}: ${r.card.card} (${r.card.kor})`);
   const text  = lines.join('\n') + '\narcana.diary에서 나만의 운명 카드를 찾아보세요 ✦';
-  const url   = 'https://sadove1024-sys.github.io/arcana-random/destiny.html';
+  const url   = 'https://arcana.dovedraw.com/destiny.html';
   const full  = text + '\n' + url;
 
   if (navigator.share) {
